@@ -15,6 +15,41 @@
 
 .blog:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-head {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.blog-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-right: 5%;
+    align-items: end;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10%;
+}
+
+.delete-button:hover {
+    background-color: #dd0000;
+}
+
+.blog-actions>button {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.blog-actions>button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .blog>p {

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./AddBlog.css";
 
-export default function AddBlog({ url, onAdd }) {
+export default function AddBlog({ api_url, onAdd }) {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const handleSubmit = (event) => {
@@ -13,14 +13,17 @@ export default function AddBlog({ url, onAdd }) {
         }
         console.log("Added\nTitle:-", title, "\nContent:\n", content);
         axios
-            .post(url, { title, content })
+            .post(api_url, { title, content })
             .then((response) => {
                 onAdd(response.data);
                 setTitle("");
                 setContent("");
             })
             .catch((error) => {
-                console.error("There was an error adding the blogs!", error);
+                console.error(
+                    "There was an error when adding the blogs!",
+                    error
+                );
             });
     };
     return (

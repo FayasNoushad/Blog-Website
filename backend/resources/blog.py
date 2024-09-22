@@ -3,7 +3,7 @@ from flask import Flask, request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from database import db
-from schemas import BlogSchema, BlogsSchema
+from schemas import BlogSchema, BlogsSchema, BlogDeleteSchema
 
 blp = Blueprint("Blogs", __name__, description="Operations on Blogs")
 
@@ -21,3 +21,8 @@ class Blogs(MethodView):
             abort(500, "title and content required")
         blog_data["time"] = str(datetime.today())
         return db.add_blog(blog_data)
+
+    @blp.arguments(BlogDeleteSchema)
+    def delete(self, blog_data):
+        db.delete_blog(blog_data["id"])
+        return {"message": "blog deleted"}

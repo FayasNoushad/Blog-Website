@@ -6,11 +6,11 @@ import "./Main.css";
 
 export default function Main() {
     const [blogs, setBlogs] = useState([]);
-    const url = "http://127.0.0.1:5000/blogs";
+    const api_url = "http://127.0.0.1:5000/blogs";
 
     useEffect(() => {
         axios
-            .get(url)
+            .get(api_url)
             .then((response) => {
                 console.log(response.data.blogs);
                 setBlogs(response.data.blogs);
@@ -24,11 +24,15 @@ export default function Main() {
         setBlogs((prevBlogs) => [...prevBlogs, blog]);
     };
 
+    const handleDelete = (blogId) => {
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
+    };
+
     return (
         <main>
-            <AddBlog url={url} onAdd={handleAdd} />
+            <AddBlog api_url={api_url} onAdd={handleAdd} />
             <hr />
-            <Blogs blogs={blogs} />
+            <Blogs api_url={api_url} blogs={blogs} onDelete={handleDelete} />
         </main>
     );
 }
