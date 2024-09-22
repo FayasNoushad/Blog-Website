@@ -1,0 +1,46 @@
+.add-blog-form {
+    margin: 20px auto;
+    max-width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px 30px;
+}
+
+.add-blog-title {
+    text-align: center;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+.add-blog-form>label,
+.add-blog-form>input,
+.add-blog-form>textarea {
+    margin-bottom: 5px;
+}
+
+.add-blog-form>input,
+.add-blog-form>textarea {
+    width: 100%;
+    padding: 4px 7px;
+    border-radius: 5px;
+    border: 1px solid #bdbdbd;
+}
+
+.add-blog-form>button {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 10px 15px;
+    border: 0;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #0e3aff;
+}
+
+.add-blog-form>button:hover {
+    background-color: #0027d3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}

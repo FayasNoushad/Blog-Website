@@ -1,0 +1,14 @@
+main {
+    padding: 20px 30px;
+}
+
+main>hr {
+    color: gray;
+    background-color: gray;
+    border-width: 0;
+    width: 80%;
+    height: 3px;
+    margin: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
