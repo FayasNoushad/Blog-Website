@@ -8,7 +8,7 @@ export default function ViewBlog({ title, content, time, onEdit, onDelete }) {
                 <div className="blog-head-title">
                     <h4 className="blog-title">{title}</h4>
                 </div>
-                <div className="blog-actions blog-view-actions row">
+                <div className="blog-actions blog-view-actions row px-2">
                     <button className="edit-button col-md-4" onClick={onEdit}>
                         Edit
                     </button>

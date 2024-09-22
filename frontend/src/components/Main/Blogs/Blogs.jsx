@@ -18,7 +18,7 @@ export default function Blogs({ api_url, blogs, onDelete }) {
                     );
                 })
             ) : (
-                <p>No blogs available</p>
+                <p className="mx-4">No blogs available</p>
             )}
         </div>
     );

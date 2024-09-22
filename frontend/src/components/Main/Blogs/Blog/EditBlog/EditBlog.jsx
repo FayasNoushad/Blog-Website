@@ -15,7 +15,7 @@ export default function EditBlog({
             <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                rows={Math.max(2, Math.ceil(content.length / 40))}
+                rows={Math.max(2, Math.ceil(content.length / 100))}
             />
 
             <div className="blog-actions blog-form-actions">
