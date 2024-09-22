@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Flask, request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from backend.database import db
+from database import db
 from schemas import BlogSchema, BlogsSchema
 
 blp = Blueprint("Blogs", __name__, description="Operations on Blogs")
