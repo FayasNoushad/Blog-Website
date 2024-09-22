@@ -29,7 +29,7 @@ export default function Main() {
     };
 
     return (
-        <main>
+        <main className="py-2 px-md-4 px-lg-5">
             <AddBlog api_url={api_url} onAdd={handleAdd} />
             <hr />
             <Blogs api_url={api_url} blogs={blogs} onDelete={handleDelete} />
