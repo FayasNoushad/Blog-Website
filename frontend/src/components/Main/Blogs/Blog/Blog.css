@@ -1,0 +1,30 @@
+.blog {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+}
+
+.blog:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-actions {
+    display: flex;
+    flex-direction: row;
+}
+
+.blog-actions>button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 10%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.blog-actions>button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}

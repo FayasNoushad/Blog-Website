@@ -1,0 +1,39 @@
+.blog-head {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+.blog-view-actions {
+    justify-content: end;
+    margin-right: 3%;
+    align-items: end;
+}
+
+.edit-button {
+    background-color: #00aa00;
+}
+
+.edit-button:hover {
+    background-color: green;
+}
+
+.delete-button {
+    background-color: red;
+}
+
+.delete-button:hover {
+    background-color: #dd0000;
+}
+
+.blog>p {
+    margin-top: 20px;
+}
+
+.blog-title {
+    margin: 0;
+}
+
+.blog>time {
+    color: grey;
+    font-size: small;
+}

@@ -1,0 +1,28 @@
+.blog-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.blog-form>input,
+.blog-form>textarea {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    padding: 4px 7px;
+    border-radius: 5px;
+    border: 1px solid #bdbdbd;
+}
+
+.blog-form-actions {
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.edit-submit-button {
+    background-color: green;
+}
+
+.edit-cancel-button {
+    background-color: grey;
+}
