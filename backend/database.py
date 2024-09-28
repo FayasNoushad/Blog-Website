@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from config import Config
 from bson import ObjectId
+from collections import deque
 
 
 class Database:
@@ -11,11 +12,11 @@ class Database:
         self.cache = {}
 
     def get_blogs(self):
-        blogs = []
+        blogs = deque()
         for blog in self.col.find({}):
             blog["id"] = str(blog["_id"])
             del blog["_id"]
-            blogs.append(blog)
+            blogs.appendleft(blog)
         return {"blogs": blogs}
 
     def get_blog(self, blog_id):
