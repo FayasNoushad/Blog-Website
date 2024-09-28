@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./AddBlog.css";
 
-export default function AddBlog({ api_url, onAdd }) {
+export default function AddBlog() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+
+    const api_url = import.meta.env.VITE_REACT_APP_API_URL;
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!title || !content) {
@@ -14,10 +16,10 @@ export default function AddBlog({ api_url, onAdd }) {
         console.log("Added\nTitle:-", title, "\nContent:\n", content);
         axios
             .post(api_url, { title, content })
-            .then((response) => {
-                onAdd(response.data);
+            .then(() => {
                 setTitle("");
                 setContent("");
+                return alert("Blog Added");
             })
             .catch((error) => {
                 console.error(

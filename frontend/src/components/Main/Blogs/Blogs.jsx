@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Blogs.css";
 import Blog from "./Blog/Blog";
 
-export default function Blogs({ api_url, blogs, onDelete }) {
+export default function Blogs() {
+    const [blogs, setBlogs] = useState([]);
+    const api_url = import.meta.env.VITE_REACT_APP_API_URL;
+    useEffect(() => {
+        axios
+            .get(api_url)
+            .then((response) => {
+                console.log(response.data.blogs);
+                setBlogs(response.data.blogs);
+            })
+            .catch((error) => {
+                console.error("There was an error fetching the blogs!", error);
+            });
+    }, []);
+
+    const handleDelete = () => {
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
+    };
+
     return (
         <div className="blogs my-4 px-2 px-md-4 px-lg-5">
             <h3 className="blogs-title">Blogs</h3>
@@ -13,7 +32,7 @@ export default function Blogs({ api_url, blogs, onDelete }) {
                             key={index}
                             blog={blog}
                             api_url={api_url}
-                            onDelete={onDelete}
+                            onDelete={handleDelete}
                         />
                     );
                 })
