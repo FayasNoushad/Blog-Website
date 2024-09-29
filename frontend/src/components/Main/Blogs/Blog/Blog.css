@@ -16,10 +16,10 @@
 }
 
 .blog-actions>button {
-    margin: 5px;
-    padding: 5px 10px;
+    margin: 3px;
     color: white;
     border: none;
+    min-width: fit-content;
     border-radius: 10%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

@@ -8,28 +8,38 @@ from schemas import BlogSchema, BlogsSchema, BlogEditSchema, BlogDeleteSchema
 blp = Blueprint("Blogs", __name__, description="Operations on Blogs")
 
 
-@blp.route("/blogs")
-class Blogs(MethodView):
+@blp.route("/blogs/<string:author_id>")
+class GetBlogs(MethodView):
     @blp.response(200, BlogsSchema)
-    def get(self):
-        return db.get_blogs()
+    def get(self, author_id):
+        return db.get_blogs(author_id)
 
+
+@blp.route("/blog")
+class Blogs(MethodView):
     @blp.response(201, BlogSchema)
     @blp.arguments(BlogSchema)
     def post(self, blog_data):
-        if not (blog_data.get("title") and blog_data.get("content")):
-            abort(500, "title and content required")
         blog_data["time"] = str(datetime.today())
-        return db.add_blog(blog_data)
+        response = db.add_blog(blog_data)
+        if "error" in response:
+            abort(401, response["error"])
+        return response
 
     @blp.response(200, BlogEditSchema)
     @blp.arguments(BlogEditSchema)
     def put(self, blog_data):
-        if not (blog_data.get("title") and blog_data.get("content")):
-            abort(500, "title and content required")
-        return db.edit_blog(blog_data)
+        response = db.edit_blog(blog_data)
+        if "error" in response:
+            abort(401, response["error"])
+        return response
 
     @blp.arguments(BlogDeleteSchema)
     def delete(self, blog_data):
-        db.delete_blog(blog_data["id"])
-        return {"message": "blog deleted"}
+        response = db.delete_blog(blog_data)
+        if "error" in response:
+            abort(403, response["error"])
+        response = {"message": "blog deleted"}
+        if "error" in response:
+            abort(401, response["error"])
+        return response

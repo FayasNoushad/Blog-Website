@@ -37,7 +37,13 @@ export default function Blog({ blog, api_url, onDelete }) {
     const handleEditSubmit = (event) => {
         event.preventDefault();
         axios
-            .put(api_url, { id: blog.id, title, content })
+            .put(api_url, {
+                id: blog.id,
+                title,
+                content,
+                author_id: localStorage.getItem("author_id"),
+                password: localStorage.getItem("password"),
+            })
             .then((response) => {
                 console.log(response);
                 setIsEditable(false);
@@ -56,7 +62,13 @@ export default function Blog({ blog, api_url, onDelete }) {
 
     const handleDelete = () => {
         axios
-            .delete(api_url, { data: { id: blog.id } })
+            .delete(api_url, {
+                data: {
+                    id: blog.id,
+                    author_id: localStorage.getItem("user_id"),
+                    password: localStorage.getItem("password"),
+                },
+            })
             .then((response) => {
                 onDelete(blog.id);
                 console.log(response.data.message);

@@ -5,3 +5,4 @@ marshmallow
 python-dotenv
 pymongo[srv]
 dnspython
+passlib

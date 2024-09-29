@@ -9,11 +9,14 @@ export default function ViewBlog({ title, content, time, onEdit, onDelete }) {
                     <h4 className="blog-title">{title}</h4>
                 </div>
                 <div className="blog-actions blog-view-actions row px-2">
-                    <button className="edit-button col-md-4" onClick={onEdit}>
+                    <button
+                        className="edit-button col-md-4 p-2"
+                        onClick={onEdit}
+                    >
                         Edit
                     </button>
                     <button
-                        className="delete-button col-md-4"
+                        className="delete-button col-md-4 p-2"
                         onClick={onDelete}
                     >
                         Delete

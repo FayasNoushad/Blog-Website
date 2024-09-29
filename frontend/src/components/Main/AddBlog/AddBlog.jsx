@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import "./AddBlog.css";
+import { API_URL } from "../../../configs";
 
 export default function AddBlog() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
-    const api_url = import.meta.env.VITE_REACT_APP_API_URL;
+    const api_url = API_URL + "/blog";
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!title || !content) {
@@ -15,7 +16,12 @@ export default function AddBlog() {
         }
         console.log("Added\nTitle:-", title, "\nContent:\n", content);
         axios
-            .post(api_url, { title, content })
+            .post(api_url, {
+                title,
+                content,
+                author_id: localStorage.getItem("user_id"),
+                password: localStorage.getItem("password"),
+            })
             .then(() => {
                 setTitle("");
                 setContent("");

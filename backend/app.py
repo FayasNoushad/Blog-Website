@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_smorest import Api
 from resources.blog import blp as BlogBlueprint
+from resources.user import blp as UserBlueprint
 
 
 def create_app():
@@ -21,6 +22,7 @@ def create_app():
 
     api = Api(app)
 
+    api.register_blueprint(UserBlueprint)
     api.register_blueprint(BlogBlueprint)
 
     return app

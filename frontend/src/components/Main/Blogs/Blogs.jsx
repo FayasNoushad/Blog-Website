@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Blogs.css";
 import Blog from "./Blog/Blog";
+import { API_URL } from "../../../configs";
 
 export default function Blogs() {
     const [blogs, setBlogs] = useState([]);
-    const api_url = import.meta.env.VITE_REACT_APP_API_URL;
+    const blogs_api_url = API_URL + "/blogs/" + localStorage.getItem("user_id");
+    const api_url = API_URL + "/blog";
     useEffect(() => {
         axios
-            .get(api_url)
+            .get(blogs_api_url)
             .then((response) => {
                 console.log(response.data.blogs);
                 setBlogs(response.data.blogs);
@@ -18,7 +20,7 @@ export default function Blogs() {
             });
     }, []);
 
-    const handleDelete = () => {
+    const handleDelete = (blogId) => {
         setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
     };
 

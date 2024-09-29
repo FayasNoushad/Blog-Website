@@ -15,10 +15,12 @@
 
 .edit-button {
     background-color: #00aa00;
+    min-width: fit-content;
 }
 
 .edit-button:hover {
     background-color: green;
+    min-width: fit-content;
 }
 
 .delete-button {
