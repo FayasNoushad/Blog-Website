@@ -7,6 +7,7 @@ import { API_URL } from "../../../configs";
 export default function Blogs() {
     const [blogs, setBlogs] = useState([]);
     const blogs_api_url = API_URL + "/blogs/" + localStorage.getItem("user_id");
+    const [loading, setLoading] = useState(true);
     const api_url = API_URL + "/blog";
     useEffect(() => {
         axios
@@ -14,9 +15,11 @@ export default function Blogs() {
             .then((response) => {
                 console.log(response.data.blogs);
                 setBlogs(response.data.blogs);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("There was an error fetching the blogs!", error);
+                setLoading(false);
             });
     }, []);
 
@@ -27,7 +30,9 @@ export default function Blogs() {
     return (
         <div className="blogs my-4 px-2 px-md-4 px-lg-5">
             <h3 className="blogs-title">Blogs</h3>
-            {blogs.length > 0 ? (
+            {loading ? (
+                <p>Loading Blogs....</p>
+            ) : blogs.length > 0 ? (
                 blogs.map((blog, index) => {
                     return (
                         <Blog

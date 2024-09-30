@@ -41,7 +41,7 @@ export default function Blog({ blog, api_url, onDelete }) {
                 id: blog.id,
                 title,
                 content,
-                author_id: localStorage.getItem("author_id"),
+                author_id: localStorage.getItem("user_id"),
                 password: localStorage.getItem("password"),
             })
             .then((response) => {
