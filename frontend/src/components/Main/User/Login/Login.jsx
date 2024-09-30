@@ -3,7 +3,6 @@ import "./Login.css";
 import axios from "axios";
 import { API_URL } from "../../../../configs";
 import { useNavigate } from "react-router-dom";
-import Main from "../../Main";
 
 export default function Login() {
     const api_url = API_URL + "/getuser";
@@ -31,10 +30,7 @@ export default function Login() {
                 navigate("/");
             })
             .catch((error) => {
-                console.error(
-                    "There was an error when adding the blogs!",
-                    error
-                );
+                console.error("There was an error when login!", error);
             });
     };
 

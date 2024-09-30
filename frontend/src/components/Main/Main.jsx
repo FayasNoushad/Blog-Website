@@ -4,6 +4,7 @@ import Blogs from "./Blogs/Blogs";
 import AddBlog from "./AddBlog/AddBlog";
 import "./Main.css";
 import Login from "./User/Login/Login";
+import Register from "./User/Register/Register";
 
 export default function Main() {
     const [userLogin, setUserLogin] = useState(
@@ -31,6 +32,8 @@ export default function Main() {
                         <Route path="*" element={<Login />} />
                     ) : (
                         <>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
                             <Route path="/post" element={<AddBlog />} />
                             <Route path="*" element={<Blogs />} />
                         </>

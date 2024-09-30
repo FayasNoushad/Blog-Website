@@ -1,0 +1,15 @@
+.register-form {
+    margin: 100px 20%;
+    padding: 50px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.register-form label {
+    margin-bottom: 5px;
+}
+
+.password-wrong {
+    display: block;
+    color: red;
+}
