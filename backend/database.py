@@ -19,6 +19,17 @@ class Database:
         del user["password"]
         return user
 
+    def get_user_details(self, username):
+        user = self.users.find_one({"username": username})
+        if not user:
+            return {"error": "user not found"}
+        return {
+            "first_name": user["first_name"],
+            "last_name": user["last_name"],
+            "id": str(user["_id"]),
+            "username": user["username"],
+        }
+
     def get_user(self, user_data):
         password = user_data.get("password")
         user = self.users.find_one(user_data["data"])

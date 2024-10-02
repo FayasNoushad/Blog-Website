@@ -3,10 +3,17 @@ from flask import Flask, request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from database import db
-from schemas import UserSchema, GetUserSchema
+from schemas import UserSchema, GetUserSchema, GetUserDetailsSchema
 from passlib.hash import pbkdf2_sha256
 
 blp = Blueprint("Users", __name__, description="Operations on Users")
+
+
+@blp.route("/getuser/<string:username>")
+class GetUserDetails(MethodView):
+    @blp.response(200, GetUserDetailsSchema)
+    def get(self, username):
+        return db.get_user_details(username)
 
 
 @blp.route("/getuser")

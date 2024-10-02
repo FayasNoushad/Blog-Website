@@ -5,6 +5,7 @@ import AddBlog from "./AddBlog/AddBlog";
 import "./Main.css";
 import Login from "./User/Login/Login";
 import Register from "./User/Register/Register";
+import Home from "./Home/Home";
 
 export default function Main() {
     const [userLogin, setUserLogin] = useState(
@@ -28,16 +29,11 @@ export default function Main() {
         <main className="py-2 px-md-4 px-lg-5">
             <Router>
                 <Routes>
-                    {!userLogin ? (
-                        <Route path="*" element={<Login />} />
-                    ) : (
-                        <>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/post" element={<AddBlog />} />
-                            <Route path="*" element={<Blogs />} />
-                        </>
-                    )}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/post" element={<AddBlog />} />
+                    <Route path="/:username" element={<Blogs />} />
+                    <Route path="*" element={<Home />} />
                 </Routes>
             </Router>
         </main>

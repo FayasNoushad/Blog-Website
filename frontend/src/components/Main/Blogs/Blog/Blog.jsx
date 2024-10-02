@@ -4,7 +4,7 @@ import "./Blog.css";
 import EditBlog from "./EditBlog/EditBlog";
 import ViewBlog from "./ViewBlog/ViewBlog";
 
-export default function Blog({ blog, api_url, onDelete }) {
+export default function Blog({ blog, api_url, onDelete, admin }) {
     const months = [
         "January",
         "February",
@@ -96,6 +96,7 @@ export default function Blog({ blog, api_url, onDelete }) {
             time={blogTime}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            admin={admin}
         />
     );
 }

@@ -17,6 +17,13 @@ class GetUserSchema(Schema):
     password = fields.Str(required=True)
 
 
+class GetUserDetailsSchema(Schema):
+    id = fields.Str()
+    username = fields.Str()
+    first_name = fields.Str()
+    last_name = fields.Str()
+
+
 class BlogSchema(Schema):
     id = fields.Str(dump_only=True)
     title = fields.Str(required=True)
