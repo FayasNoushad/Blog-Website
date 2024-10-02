@@ -3,9 +3,9 @@ import "./Loading.css";
 
 export default function Loading() {
     return (
-        <div class="d-flex justify-content-center loading">
-            <div class="spinner-border loading-spinner" role="status">
-                <span class="sr-only"></span>
+        <div className="d-flex justify-content-center loading">
+            <div className="spinner-border loading-spinner" role="status">
+                <span className="sr-only"></span>
             </div>
         </div>
     );

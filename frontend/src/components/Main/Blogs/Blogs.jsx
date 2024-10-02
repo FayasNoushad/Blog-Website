@@ -46,8 +46,9 @@ export default function Blogs() {
                 .finally(() => {
                     setLoaded(true);
                 });
+        } else {
+            setLoaded(true);
         }
-        setLoaded(true);
     }, [user]);
 
     const api_url = API_URL + "/blog";
