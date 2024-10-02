@@ -1,0 +1,10 @@
+.loading {
+    height: max-content;
+    align-items: center;
+}
+
+.loading-spinner {
+    width: 7rem;
+    height: 7rem;
+    margin: 100px auto;
+}

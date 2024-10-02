@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Blogs.css";
 import Blog from "./Blog/Blog";
 import { API_URL } from "../../../configs";
+import Loading from "./Loading/Loading";
 
 export default function Blogs() {
     const { username } = useParams();
@@ -11,7 +12,7 @@ export default function Blogs() {
     const [user, setUser] = useState({});
     const [blogs, setBlogs] = useState([]);
     const [admin, setAdmin] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         axios
@@ -35,18 +36,18 @@ export default function Blogs() {
                 .get(blogs_api_url)
                 .then((response) => {
                     setBlogs(response.data.blogs);
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.error(
                         "There was an error fetching the blogs!",
                         error
                     );
-                    setLoading(false);
+                })
+                .finally(() => {
+                    setLoaded(true);
                 });
-        } else {
-            setLoading(false);
         }
+        setLoaded(true);
     }, [user]);
 
     const api_url = API_URL + "/blog";
@@ -57,29 +58,31 @@ export default function Blogs() {
 
     return (
         <div className="blogs my-4 px-2 px-md-4 px-lg-5">
-            {loading ? (
-                <h4>Loading Blogs....</h4>
-            ) : user.id ? (
-                <>
-                    <h3 className="blogs-title">{user.first_name} Blogs</h3>
-                    {blogs.length > 0 ? (
-                        blogs.map((blog, index) => {
-                            return (
-                                <Blog
-                                    key={index}
-                                    blog={blog}
-                                    api_url={api_url}
-                                    onDelete={handleDelete}
-                                    admin={admin}
-                                />
-                            );
-                        })
-                    ) : (
-                        <h4>No blogs available</h4>
-                    )}
-                </>
+            {loaded ? (
+                user.id ? (
+                    <>
+                        <h3 className="blogs-title">{user.first_name} Blogs</h3>
+                        {blogs.length > 0 ? (
+                            blogs.map((blog, index) => {
+                                return (
+                                    <Blog
+                                        key={index}
+                                        blog={blog}
+                                        api_url={api_url}
+                                        onDelete={handleDelete}
+                                        admin={admin}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <h4>No blogs available</h4>
+                        )}
+                    </>
+                ) : (
+                    <h4>User not found!</h4>
+                )
             ) : (
-                <h4>User not found!</h4>
+                <Loading />
             )}
         </div>
     );
