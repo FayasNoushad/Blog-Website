@@ -15,41 +15,34 @@ export default function Blogs() {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(user_api_url)
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((error) => {
+        const fetchBlogs = async () => {
+            try {
+                const userData = (await axios.get(user_api_url)).data;
+                setUser(userData);
+                if (userData.id) {
+                    setAdmin(userData.id === localStorage.getItem("user_id"));
+                    try {
+                        const blogs_api_url = `${API_URL}/blogs/${userData.id}`;
+                        const response = await axios.get(blogs_api_url);
+                        setBlogs(response.data.blogs);
+                    } catch (error) {
+                        console.error(
+                            "There was an error fetching the blogs!",
+                            error
+                        );
+                    }
+                }
+            } catch (error) {
                 console.error(
                     "There was an error when fetching user details!",
                     error
                 );
-            });
+            } finally {
+                setLoaded(true);
+            }
+        };
+        fetchBlogs();
     }, [user_api_url]);
-
-    useEffect(() => {
-        if (user.id) {
-            setAdmin(user.id === localStorage.getItem("user_id"));
-            const blogs_api_url = `${API_URL}/blogs/${user.id}`;
-            axios
-                .get(blogs_api_url)
-                .then((response) => {
-                    setBlogs(response.data.blogs);
-                })
-                .catch((error) => {
-                    console.error(
-                        "There was an error fetching the blogs!",
-                        error
-                    );
-                })
-                .finally(() => {
-                    setLoaded(true);
-                });
-        } else {
-            setLoaded(true);
-        }
-    }, [user]);
 
     const api_url = API_URL + "/blog";
 
