@@ -53,6 +53,7 @@ export default function Blogs() {
             user={user}
             admin={admin}
             loaded={loaded}
+            api_url={api_url}
             handleDelete={handleDelete}
         />
     );

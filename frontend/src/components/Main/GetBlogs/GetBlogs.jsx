@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./GetBlogs.css";
 import Blog from "./Blog/Blog";
 import Loading from "./Loading/Loading";
@@ -8,6 +8,7 @@ export default function GetBlogs({
     loaded,
     user = false,
     admin = false,
+    api_url = false,
     handleDelete = false,
     home = false,
 }) {

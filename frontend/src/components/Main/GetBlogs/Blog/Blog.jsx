@@ -93,6 +93,7 @@ export default function Blog({
                 content={content}
                 time={blogTime}
                 admin={admin}
+                user={blog.user}
             />
         );
     } else {
