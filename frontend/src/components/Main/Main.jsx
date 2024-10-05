@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Blogs from "./Blogs/Blogs";
 import AddBlog from "./AddBlog/AddBlog";
@@ -8,23 +8,6 @@ import Register from "./User/Register/Register";
 import Home from "./Home/Home";
 
 export default function Main() {
-    const [userLogin, setUserLogin] = useState(
-        localStorage.getItem("user_id") && localStorage.getItem("password")
-    );
-
-    useEffect(() => {
-        const handleStorageChange = () => {
-            setUserLogin(
-                localStorage.getItem("user_id") &&
-                    localStorage.getItem("password")
-            );
-        };
-        window.addEventListener("storage", handleStorageChange);
-        return () => {
-            window.removeEventListener("storage", handleStorageChange);
-        };
-    }, []);
-
     return (
         <main className="py-2 px-md-4 px-lg-5">
             <Router>

@@ -2,10 +2,10 @@ import React from "react";
 import "./Header.css";
 import Navbar from "./NavBar/Navbar";
 
-export default function Header() {
+export default function Header({ isLogin }) {
     return (
         <header>
-            <Navbar />
+            <Navbar isLogin={isLogin} />
         </header>
     );
 }
