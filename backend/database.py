@@ -42,6 +42,14 @@ class Database:
         del user["password"]
         return user
 
+    def get_all_blogs(self):
+        blogs = deque()
+        for blog in self.blogs.find({}):
+            blog["id"] = str(blog["_id"])
+            del blog["_id"]
+            blogs.appendleft(blog)
+        return {"blogs": blogs}
+
     def get_blogs(self, author_id):
         blogs = deque()
         for blog in self.blogs.find({"author_id": author_id}):

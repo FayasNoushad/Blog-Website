@@ -4,7 +4,13 @@ import "./Blog.css";
 import EditBlog from "./EditBlog/EditBlog";
 import ViewBlog from "./ViewBlog/ViewBlog";
 
-export default function Blog({ blog, api_url, onDelete, admin }) {
+export default function Blog({
+    blog,
+    api_url = false,
+    onDelete = false,
+    admin = false,
+    home = false,
+}) {
     const months = [
         "January",
         "February",
@@ -80,23 +86,34 @@ export default function Blog({ blog, api_url, onDelete, admin }) {
                 );
             });
     };
-    return isEditable ? (
-        <EditBlog
-            title={title}
-            content={content}
-            setTitle={setTitle}
-            setContent={setContent}
-            onSubmit={handleEditSubmit}
-            onCancel={handleEditCancel}
-        />
-    ) : (
-        <ViewBlog
-            title={title}
-            content={content}
-            time={blogTime}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            admin={admin}
-        />
-    );
+    if (home) {
+        return (
+            <ViewBlog
+                title={title}
+                content={content}
+                time={blogTime}
+                admin={admin}
+            />
+        );
+    } else {
+        return isEditable ? (
+            <EditBlog
+                title={title}
+                content={content}
+                setTitle={setTitle}
+                setContent={setContent}
+                onSubmit={handleEditSubmit}
+                onCancel={handleEditCancel}
+            />
+        ) : (
+            <ViewBlog
+                title={title}
+                content={content}
+                time={blogTime}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                admin={admin}
+            />
+        );
+    }
 }

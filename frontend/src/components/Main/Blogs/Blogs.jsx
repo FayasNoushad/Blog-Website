@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./Blogs.css";
-import Blog from "./Blog/Blog";
 import { API_URL } from "../../../configs";
-import Loading from "./Loading/Loading";
+import GetBlogs from "../GetBlogs/GetBlogs";
 
 export default function Blogs() {
     const { username } = useParams();
@@ -49,35 +47,13 @@ export default function Blogs() {
     const handleDelete = (blogId) => {
         setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
     };
-
     return (
-        <div className="blogs my-4 px-2 px-md-4 px-lg-5">
-            {loaded ? (
-                user.id ? (
-                    <>
-                        <h3 className="blogs-title">{user.first_name} Blogs</h3>
-                        {blogs.length > 0 ? (
-                            blogs.map((blog, index) => {
-                                return (
-                                    <Blog
-                                        key={index}
-                                        blog={blog}
-                                        api_url={api_url}
-                                        onDelete={handleDelete}
-                                        admin={admin}
-                                    />
-                                );
-                            })
-                        ) : (
-                            <h4>No blogs available</h4>
-                        )}
-                    </>
-                ) : (
-                    <h4>User not found!</h4>
-                )
-            ) : (
-                <Loading />
-            )}
-        </div>
+        <GetBlogs
+            blogs={blogs}
+            user={user}
+            admin={admin}
+            loaded={loaded}
+            handleDelete={handleDelete}
+        />
     );
 }

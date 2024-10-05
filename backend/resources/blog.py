@@ -8,10 +8,19 @@ from schemas import BlogSchema, BlogsSchema, BlogEditSchema, BlogDeleteSchema
 blp = Blueprint("Blogs", __name__, description="Operations on Blogs")
 
 
+@blp.route("/blogs")
+class GetAllBlogs(MethodView):
+    @blp.response(200, BlogsSchema)
+    def get(self):
+        """To get all blogs"""
+        return db.get_all_blogs()
+
+
 @blp.route("/blogs/<string:author_id>")
 class GetBlogs(MethodView):
     @blp.response(200, BlogsSchema)
     def get(self, author_id):
+        """To get blogs of an author"""
         return db.get_blogs(author_id)
 
 
