@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../configs";
 
 export default function Register() {
-    const api_url = API_URL + "/user";
+    const api_url = API_URL + "/register";
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");

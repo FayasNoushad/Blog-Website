@@ -24,7 +24,7 @@ class GetUserDetailsWithID(MethodView):
         return db.get_user_details({"_id": ObjectId(id)})
 
 
-@blp.route("/getuser")
+@blp.route("/login")
 class GetUser(MethodView):
     @blp.response(200, UserSchema)
     @blp.arguments(GetUserSchema)
@@ -44,7 +44,7 @@ class GetUser(MethodView):
             return response
 
 
-@blp.route("/user")
+@blp.route("/register")
 class Users(MethodView):
     @blp.response(201, UserSchema)
     @blp.arguments(UserSchema)

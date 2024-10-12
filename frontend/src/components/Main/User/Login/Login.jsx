@@ -5,7 +5,7 @@ import { API_URL } from "../../../../configs";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const api_url = API_URL + "/getuser";
+    const api_url = API_URL + "/login";
     const navigate = useNavigate();
     const [isEmail, setIsEmail] = useState(true);
     const [email, setEmail] = useState("");
