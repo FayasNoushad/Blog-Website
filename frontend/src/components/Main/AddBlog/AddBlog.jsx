@@ -3,36 +3,38 @@ import React, { useState } from "react";
 import "./AddBlog.css";
 import { API_URL } from "../../../configs";
 
-export default function AddBlog() {
+export default function AddBlog({ token }) {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
     const api_url = API_URL + "/blog";
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (!title || !content) {
             event.preventDefault();
             return alert("Title and content required");
         }
         console.log("Added\nTitle:-", title, "\nContent:\n", content);
-        axios
-            .post(api_url, {
-                title,
-                content,
-                author_id: localStorage.getItem("user_id"),
-                password: localStorage.getItem("password"),
-            })
-            .then(() => {
-                setTitle("");
-                setContent("");
-                return alert("Blog Added");
-            })
-            .catch((error) => {
-                console.error(
-                    "There was an error when adding the blogs!",
-                    error
-                );
-            });
+        try {
+            await axios.post(
+                api_url,
+                {
+                    title,
+                    content,
+                    author_id: localStorage.getItem("user_id"),
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    },
+                }
+            );
+            setTitle("");
+            setContent("");
+            return alert("Blog Added");
+        } catch (error) {
+            console.error("There was an error when adding the blogs!", error);
+        }
     };
     return (
         <form className="add-blog-form">

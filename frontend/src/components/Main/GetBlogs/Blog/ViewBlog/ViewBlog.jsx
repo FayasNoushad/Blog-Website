@@ -8,8 +8,9 @@ export default function ViewBlog({
     time,
     onEdit = false,
     onDelete = false,
-    admin,
+    token,
     user = false,
+    userId = false,
 }) {
     const navigate = useNavigate();
     const handleClick = (username) => {
@@ -30,17 +31,17 @@ export default function ViewBlog({
                         Written by {user.first_name}
                     </button>
                 )}
-                {admin && (
+                {token && localStorage.getItem("user_id") === userId && (
                     <div className="blog-actions blog-view-actions row px-2">
                         <button
                             className="edit-button col-md-4 p-2"
-                            onClick={onEdit}
+                            onClick={(e) => onEdit(e)}
                         >
                             Edit
                         </button>
                         <button
                             className="delete-button col-md-4 p-2"
-                            onClick={onDelete}
+                            onClick={(e) => onDelete(e)}
                         >
                             Delete
                         </button>

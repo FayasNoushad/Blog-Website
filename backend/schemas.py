@@ -8,16 +8,17 @@ class UserSchema(Schema):
     first_name = fields.Str(required=True)
     last_name = fields.Str(required=False)
     password = fields.Str(required=True, load_only=True)
+    token = fields.Str(dump_only=True)
     created_at = fields.Str(dump_only=True)
 
 
-class GetUserSchema(Schema):
+class LoginSchema(Schema):
     username = fields.Str()
     email = fields.Str()
     password = fields.Str(required=True)
 
 
-class GetUserDetailsSchema(Schema):
+class GetUserSchema(Schema):
     id = fields.Str()
     username = fields.Str()
     first_name = fields.Str()
@@ -29,14 +30,12 @@ class BlogSchema(Schema):
     title = fields.Str(required=True)
     content = fields.Str(required=True)
     author_id = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)
     time = fields.Str(dump_only=True)
 
 
 class BlogsSchema(Schema):
     blogs = fields.List(fields.Nested(BlogSchema), dump_only=True)
     author_id = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)
 
 
 class BlogEditSchema(Schema):
@@ -44,11 +43,9 @@ class BlogEditSchema(Schema):
     title = fields.Str()
     content = fields.Str()
     author_id = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)
     time = fields.Str(dump_only=True)
 
 
 class BlogDeleteSchema(Schema):
     id = fields.Str(required=True)
     author_id = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)

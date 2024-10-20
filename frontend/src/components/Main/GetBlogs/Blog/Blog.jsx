@@ -8,8 +8,9 @@ export default function Blog({
     blog,
     api_url = false,
     onDelete = false,
-    admin = false,
+    token = false,
     home = false,
+    userId = false,
 }) {
     const months = [
         "January",
@@ -40,23 +41,27 @@ export default function Blog({
         setIsEditable((prevState) => !prevState);
     };
 
-    const handleEditSubmit = (event) => {
+    const handleEditSubmit = async (event) => {
         event.preventDefault();
-        axios
-            .put(api_url, {
-                id: blog.id,
-                title,
-                content,
-                author_id: localStorage.getItem("user_id"),
-                password: localStorage.getItem("password"),
-            })
-            .then((response) => {
-                console.log(response);
-                setIsEditable(false);
-            })
-            .catch((error) => {
-                console.error("There was an error when editing blog!", error);
-            });
+        try {
+            await axios.put(
+                api_url,
+                {
+                    id: blog.id,
+                    title,
+                    content,
+                    author_id: localStorage.getItem("user_id"),
+                },
+                {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    },
+                }
+            );
+            setIsEditable(false);
+        } catch (error) {
+            console.error("There was an error when editing blog!", error);
+        }
     };
 
     const handleEditCancel = (event) => {
@@ -66,33 +71,33 @@ export default function Blog({
         setIsEditable(false);
     };
 
-    const handleDelete = () => {
-        axios
-            .delete(api_url, {
+    const handleDelete = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.delete(api_url, {
                 data: {
                     id: blog.id,
                     author_id: localStorage.getItem("user_id"),
-                    password: localStorage.getItem("password"),
                 },
-            })
-            .then((response) => {
-                onDelete(blog.id);
-                console.log(response.data.message);
-            })
-            .catch((error) => {
-                console.error(
-                    "There was an error when deleting the blog!",
-                    error
-                );
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
             });
+            if (!response.error) {
+                onDelete(blog.id);
+            }
+        } catch (error) {
+            alert("There was an error when deleting the blog!");
+            console.log(error);
+        }
     };
-    if (home) {
+    if (home || !token) {
         return (
             <ViewBlog
                 title={title}
                 content={content}
                 time={blogTime}
-                admin={admin}
+                token={token}
                 user={blog.user}
             />
         );
@@ -113,7 +118,8 @@ export default function Blog({
                 time={blogTime}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                admin={admin}
+                token={token}
+                userId={userId}
             />
         );
     }

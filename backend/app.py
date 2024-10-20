@@ -1,6 +1,15 @@
+import json
+import secrets
 from flask import Flask
 from flask_cors import CORS
 from flask_smorest import Api
+from datetime import datetime, timedelta, timezone
+from flask_jwt_extended import (
+    create_access_token,
+    get_jwt,
+    get_jwt_identity,
+    JWTManager,
+)
 from resources.blog import blp as BlogBlueprint
 from resources.user import blp as UserBlueprint
 
@@ -21,6 +30,26 @@ def create_app():
     )
 
     api = Api(app)
+
+    app.config["JWT_SECRET_KEY"] = secrets.token_hex(16)
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+    jwt = JWTManager(app)
+
+    @app.after_request
+    def refresh_expiring_jwts(response):
+        try:
+            exp_timestamp = get_jwt()["exp"]
+            now = datetime.now(timezone.utc)
+            target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+            if target_timestamp > exp_timestamp:
+                access_token = create_access_token(identity=get_jwt_identity())
+                data = response.get_json()
+                if type(data) is dict:
+                    data["access_token"] = access_token
+                    response.data = json.dumps(data)
+            return response
+        except (RuntimeError, KeyError):
+            return response
 
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(BlogBlueprint)

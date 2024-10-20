@@ -34,8 +34,8 @@ export default function Register() {
         axios
             .post(api_url, data)
             .then((response) => {
+                setToken(response.data.access_token);
                 localStorage.setItem("user_id", response.data.id);
-                localStorage.setItem("password", password);
                 setFirstName("");
                 setLastName("");
                 setEmail("");

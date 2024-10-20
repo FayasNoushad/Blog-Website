@@ -1,10 +1,19 @@
 from datetime import datetime
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
+from flask_jwt_extended import (
+    create_access_token,
+    get_jwt,
+    get_jwt_identity,
+    unset_jwt_cookies,
+    jwt_required,
+    JWTManager,
+)
+
 from database import db
 from bson import ObjectId
-from schemas import UserSchema, GetUserSchema, GetUserDetailsSchema
+from schemas import UserSchema, LoginSchema, GetUserSchema
 from passlib.hash import pbkdf2_sha256
 
 blp = Blueprint("Users", __name__, description="Operations on Users")
@@ -12,22 +21,22 @@ blp = Blueprint("Users", __name__, description="Operations on Users")
 
 @blp.route("/getuser/<string:username>")
 class GetUserDetails(MethodView):
-    @blp.response(200, GetUserDetailsSchema)
+    @blp.response(200, GetUserSchema)
     def get(self, username):
         return db.get_user_details({"username": username})
 
 
 @blp.route("/getuserwithid/<string:id>")
 class GetUserDetailsWithID(MethodView):
-    @blp.response(200, GetUserDetailsSchema)
+    @blp.response(200, GetUserSchema)
     def get(self, id):
         return db.get_user_details({"_id": ObjectId(id)})
 
 
 @blp.route("/login")
-class GetUser(MethodView):
+class Login(MethodView):
     @blp.response(200, UserSchema)
-    @blp.arguments(GetUserSchema)
+    @blp.arguments(LoginSchema)
     def post(self, user_data):
         password = user_data.get("password")
         if not password:
@@ -41,7 +50,7 @@ class GetUser(MethodView):
         if "error" in response:
             abort(401, response["error"])
         else:
-            return response
+            return jsonify(response)
 
 
 @blp.route("/register")
@@ -64,13 +73,15 @@ class Users(MethodView):
             and len(password) > 5
         ):
             abort(500, "Required fields are not filled")
-        return db.add_user(
-            {
-                "username": username.lower(),
-                "email": email.lower(),
-                "first_name": first_name,
-                "last_name": last_name,
-                "password": pbkdf2_sha256.hash(password),
-                "created_at": str(datetime.today()),
-            }
+        return jsonify(
+            db.add_user(
+                {
+                    "username": username.lower(),
+                    "email": email.lower(),
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "password": pbkdf2_sha256.hash(password),
+                    "created_at": str(datetime.today()),
+                }
+            )
         )

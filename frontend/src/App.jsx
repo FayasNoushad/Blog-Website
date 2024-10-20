@@ -5,16 +5,11 @@ import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 function App() {
-    const [userLogin, setUserLogin] = useState(
-        localStorage.getItem("user_id") && localStorage.getItem("password")
-    );
+    const [userLogin, setUserLogin] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
         const handleStorageChange = () => {
-            setUserLogin(
-                localStorage.getItem("user_id") &&
-                    localStorage.getItem("password")
-            );
+            setUserLogin(Boolean(localStorage.getItem("token")));
         };
         window.addEventListener("storage", handleStorageChange);
         return () => {

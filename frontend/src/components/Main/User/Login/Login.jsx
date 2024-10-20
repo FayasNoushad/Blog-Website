@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_URL } from "../../../../configs";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ setToken }) {
     const api_url = API_URL + "/login";
     const navigate = useNavigate();
     const [isEmail, setIsEmail] = useState(true);
@@ -21,12 +21,11 @@ export default function Login() {
         axios
             .post(api_url, data)
             .then((response) => {
+                setToken(response.data.access_token);
                 localStorage.setItem("user_id", response.data.id);
-                localStorage.setItem("password", password);
                 setEmail("");
                 setUsername("");
                 setPassword("");
-                console.log(data);
                 navigate("/");
             })
             .catch((error) => {

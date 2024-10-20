@@ -19,23 +19,24 @@ export default function Navbar({ isLogin }) {
                     Blog Website
                 </div>
                 <div className="ms-auto">
-                    <a href="/" className="btn btn-outline-primary me-2">
-                        Blogs
-                    </a>
-                    {isLogin ? (
-                        <button
-                            onClick={() => (location.href = "/post")}
-                            className="btn btn-outline-primary"
-                        >
-                            Add Blog
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => (location.href = "/login")}
-                            className="btn btn-outline-success"
-                        >
-                            Login
-                        </button>
+                    {location.pathname !== "/" && (
+                        <a href="/" className="btn btn-outline-primary me-2">
+                            Blogs
+                        </a>
+                    )}
+                    {isLogin && location.pathname !== "/post" && (
+                        <a href="/post">
+                            <button className="btn btn-outline-primary">
+                                Add Blog
+                            </button>
+                        </a>
+                    )}
+                    {!isLogin && location.pathname !== "/login" && (
+                        <a href="/login">
+                            <button className="btn btn-outline-success">
+                                Login
+                            </button>
+                        </a>
                     )}
                 </div>
             </div>

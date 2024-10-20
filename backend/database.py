@@ -3,6 +3,7 @@ from config import Config
 from bson import ObjectId
 from collections import deque
 from passlib.hash import pbkdf2_sha256
+from flask_jwt_extended import create_access_token
 
 
 class Database:
@@ -17,6 +18,7 @@ class Database:
         inserted = self.users.insert_one(user)
         user["id"] = inserted.inserted_id
         del user["password"]
+        user["access_token"] = create_access_token(identity=user["id"])
         return user
 
     def get_user_details(self, data):
@@ -40,6 +42,7 @@ class Database:
         user["id"] = str(user["_id"])
         del user["_id"]
         del user["password"]
+        user["access_token"] = create_access_token(identity=user["id"])
         return user
 
     def get_all_blogs(self):
@@ -65,26 +68,15 @@ class Database:
         return blog
 
     def add_blog(self, blog_data):
-        response = self.get_user(
-            {
-                "data": {"_id": ObjectId(blog_data["author_id"])},
-                "password": blog_data["password"],
-            }
-        )
+        response = self.get_user_details({"_id": ObjectId(blog_data["author_id"])})
         if "error" in response:
             return response
         inserted = self.blogs.insert_one(blog_data)
         blog_data["id"] = inserted.inserted_id
-        del blog_data["password"]
         return blog_data
 
     def edit_blog(self, blog_data):
-        response = self.get_user(
-            {
-                "data": {"_id": ObjectId(blog_data["author_id"])},
-                "password": blog_data["password"],
-            }
-        )
+        response = self.get_user_details({"_id": ObjectId(blog_data["author_id"])})
         if "error" in response:
             return response
         self.blogs.update_one(
@@ -99,12 +91,7 @@ class Database:
         return self.get_blog(blog_data["id"])
 
     def delete_blog(self, blog_data):
-        response = self.get_user(
-            {
-                "data": {"_id": ObjectId(blog_data["author_id"])},
-                "password": blog_data["password"],
-            }
-        )
+        response = self.get_user_details({"_id": ObjectId(blog_data["author_id"])})
         if "error" in response:
             return response
         self.blogs.delete_one({"_id": ObjectId(blog_data["id"])})

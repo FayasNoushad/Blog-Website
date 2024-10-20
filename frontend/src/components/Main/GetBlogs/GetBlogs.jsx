@@ -7,7 +7,7 @@ export default function GetBlogs({
     blogs,
     loaded,
     user = false,
-    admin = false,
+    token = false,
     api_url = false,
     handleDelete = false,
     home = false,
@@ -37,7 +37,8 @@ export default function GetBlogs({
                                             blog={blog}
                                             api_url={api_url}
                                             onDelete={handleDelete}
-                                            admin={admin}
+                                            userId={user.id}
+                                            token={token}
                                         />
                                     );
                                 }
