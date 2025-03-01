@@ -46,10 +46,14 @@ A blog website made with ReactJS as frontend and Python Flask as backend.
    ```bash
    cd frontend
    ```
-2. Run the following command:
+2. Install the required dependencies:
    ```bash
-   npm run build
+   npm install
    ```
-3. The frontend server will start running on `http://localhost:3000`.
+3. Run the following command:
+   ```bash
+   npm run dev
+   ```
+4. The frontend server will start running on `http://localhost:5173`.
 
 ---
